@@ -19,12 +19,8 @@ model = AutoModelForCausalLM.from_pretrained(
 def get_llama_response(user_question):
     prompt = f"User: {user_question}\nAssistant:"
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    a = 1
     with torch.no_grad():
-        a+=1
-        print(a)
         outputs = model.generate(**inputs, max_new_tokens=100, do_sample=True, temperature=0.7)
-    print(a)
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return response.split("Assistant:")[-1].strip()
 
@@ -35,9 +31,6 @@ def main():
     chat_history = []
 
     while True:
-        a = 1
-        a += 1
-        print(a)
         user_question = (
             f'''
         You are an AI agent that thinks before answering.
